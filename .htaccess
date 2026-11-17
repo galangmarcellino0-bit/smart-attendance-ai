@@ -1,0 +1,24 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Keamanan: Blokir akses langsung ke folder dan file internal sensitif
+    RewriteRule ^(\.env|\.git|app|database|storage|tests|vendor) - [F,L,NC]
+
+    # Jika request mengarah ke file atau direktori statis di dalam folder public/
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Teruskan request yang bukan file/folder ke Front Controller public
+    RewriteCond %{REQUEST_URI} !^/public/ [NC]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
+</IfModule>
+
+# Matikan directory listing demi keamanan
+Options -Indexes

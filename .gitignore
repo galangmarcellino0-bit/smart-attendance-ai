@@ -1,0 +1,9 @@
+.env
+node-chatbot/.env
+node-chatbot/node_modules/
+storage/logs/*.log
+storage/cache/*
+storage/temp/*
+*.tmp
+.DS_Store
+Thumbs.db
